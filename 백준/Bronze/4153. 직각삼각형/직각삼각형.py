@@ -1,9 +1,9 @@
 while True:
-    tri = map(int, input().split())
-    sort = sorted(tri)
-    if sort == [0,0,0]:
+    tri = list(map(int, input().split()))
+    if tri[0]==0 and tri[1]==0 and tri[2]==0:
         break
-    elif sort[2]**2 == sort[0]**2 + sort[1]**2:
+    tri.sort()
+    if tri[2]**2 == tri[0]**2 + tri[1]**2:
         print("right")
     else:
         print("wrong")
