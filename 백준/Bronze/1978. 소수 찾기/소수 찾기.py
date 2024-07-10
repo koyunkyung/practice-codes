@@ -3,13 +3,11 @@ nums = list(map(int, input().split()))
 
 prime = 0
 for i in nums:
-    if i == 1:
-        pass
-    else:
-        ndiv = 0
-        for j in range(1, i+1):
+    error = 0
+    if i > 1:
+        for j in range(2, i):   # 1과 자기자신 제외 숫자들 중 약수 있는지 확인
             if i % j == 0:
-                ndiv += 1
-        if ndiv == 2:
+                error += 1
+        if error == 0:
             prime += 1
 print(prime)
