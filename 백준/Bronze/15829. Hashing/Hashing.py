@@ -1,14 +1,7 @@
 L = int(input())
-words = str(input())
-
-from string import ascii_lowercase
-import math
-alist = list(ascii_lowercase)
+words = list(input())
 hash = 0
-for i in range(len(words)):
-    for k in range(len(alist)):
-        if words[i] == alist[k]:
-            idx = k+1
-    r = math.pow(31, i)
-    hash += idx * r
-print(int(hash))
+
+for i in range(L):
+    hash += ((ord(words[i])-96) * (31 ** i))
+print(hash % 1234567891)
