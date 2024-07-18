@@ -1,15 +1,18 @@
+# 에라토스테네스의 체 알고리즘
+
+def getprime(n):
+    isprime = [False, False] + [True]*(n-1)
+    primes = []
+    for i in range(2,n+1):
+        if isprime[i]:
+            primes.append(i)
+            for j in range(i*2, n+1, i):
+                isprime[j] = False
+    return primes
+
 import sys
-import math
-
-def isprime(x):
-    if x == 1:
-        return False
-    for i in range(2, int(math.sqrt(x)+1)):
-        if x % i == 0:
-            return False
-    return True
-
 m, n = map(int, sys.stdin.readline().split())
-for k in range(m, n+1):
-    if isprime(k):
-        print(k)
+primes = getprime(n)
+for p in primes:
+    if p >= m:
+        print(p)
