@@ -6,14 +6,17 @@ n = int(input())
 v = int(input())
 graph = [[] for i in range(n+1)]
 visited = [0]*(n+1)
+cnt = -1
 for i in range(v):
     a, b = map(int, input().split())
-    graph[a] += [b]
-    graph[b] += [a]
+    graph[a].append(b)
+    graph[b].append(a)
 def dfs(v):
     visited[v] = 1
-    for nx in graph[v]:
-        if visited[nx] == 0:
-            dfs(nx)
+    global cnt
+    cnt += 1
+    for i in graph[v]:
+        if not visited[i]:
+            dfs(i)
 dfs(1)
-print(sum(visited)-1)
+print(cnt)
