@@ -5,30 +5,27 @@ input = sys.stdin.readline
 N, B = map(int, input().split())
 A = [list(map(int, input().split())) for _ in range(N)]
 
-def mul(U, V):
-    n = len(U)
-    Z = [[0]*n for _ in range(n)]
+def multi(a, b):
+    X = [[0]*N for _ in range(N)]
+    for i in range(N):  # 행렬
+        for j in range(N):
+            for k in range(N):
+                X[i][j] += a[i][k]*b[k][j] % 1000   # 곱셈 연산
+    return X
 
-    for row in range(n):
-        for col in range(n):
-            e = 0
-            for i in range(n):
-                e += U[row][i] * V[i][col]
-                Z[row][col] = e % 1000
-    return Z
-
-def square(A, B):
-    if B == 1:
-        for x in range(len(A)):
-            for y in range(len(A)):
-                A[x][y] %= 1000
-        return A
-    tmp = square(A, B//2)
-    if B % 2:
-        return mul(mul(tmp, tmp), A)
+def square(x, n):
+    if n == 1:
+        return x
+    temp = square(x, n//2)
+    if n % 2 == 0:
+        return multi(temp, temp)
     else:
-        return mul(tmp,tmp)
-
+        return multi(multi(temp,temp),x)
+    
 result = square(A, B)
-for r in result:
-    print(*r)
+for i in range(N):
+    for j in range(N):
+        result[i][j] %= 1000
+
+for k in result:
+    print(*k)
