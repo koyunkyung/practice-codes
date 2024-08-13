@@ -1,6 +1,5 @@
-# bfs
+# dfs
 import sys
-from collections import deque
 input = sys.stdin.readline
 
 v = int(input())
@@ -10,20 +9,19 @@ for _ in range(v):
     for n in range(1, len(info)-2, 2):
         tree[info[0]].append((info[n], info[n+1]))  # (연결노드, 거리)
 
-def bfs(start):
-    visited = [-1] * (v+1)
-    visited[start] = 0
-    q = deque()
-    q.append(start)
+visited = [-1] * (v+1)
+visited[1] = 0
 
-    while q:
-        cur = q.popleft()
-        for next, next_d in tree[cur]:
-            if visited[next] == -1:
-                q.append(next)
-                visited[next] = visited[cur] + next_d
-    
-    m = max(visited)
-    return [visited.index(m), m]
+def dfs(start, distance):
+    for next, next_d in tree[start]:
+        if visited[next] == -1:
+            visited[next] = distance + next_d
+            dfs(next, distance + next_d)
 
-print(bfs(bfs(1)[0])[1])
+dfs(1, 0)
+last_Node = visited.index(max(visited))
+visited = [-1] * (v+1)
+visited[last_Node] = 0
+dfs(last_Node, 0)
+
+print(max(visited))
