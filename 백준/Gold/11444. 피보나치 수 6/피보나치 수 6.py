@@ -1,24 +1,19 @@
-from collections import defaultdict
-n = int(input())
-memo = defaultdict(int)
-memo[1], memo[2] = 1, 1
+dp = dict()
 
-def F(num):
-    if num <= 2:
-        return memo[num]
-    elif memo[num] > 0:
-        return memo[num]
+def fibo(n):
+    if dp.get(n) != None:
+        return dp[n]
+    if n == 0:
+        return 0
+    if n == 1 or n == 2:
+        return 1
+    if n % 2 == 0:
+        dp[n//2 + 1] = fibo(n//2 + 1) % 1000000007
+        dp[n//2 - 1] = fibo(n//2 - 1) % 1000000007
+        return dp[n//2 + 1] ** 2 - dp[n//2 -1] ** 2
     else:
-        half = num // 2
-        if num % 2 == 0:
-            h0 = F(half)
-            h1 = F(half-1)
-            memo[num] = ((2*h1 + h0) * h0) % 1000000007
-            return memo[num]
-        else:
-            h0 = F(half+1)
-            h1 = F(half)
-            memo[num] = (h0**2 + h1**2) % 1000000007
-            return memo[num]
+        dp[n//2 + 1] = fibo(n//2 + 1) % 1000000007
+        dp[n//2] = fibo(n//2) % 1000000007
+        return dp[n//2 + 1] ** 2 + dp[n//2] ** 2
 
-print(F(n))
+print(fibo(int(input())) % 1000000007)
